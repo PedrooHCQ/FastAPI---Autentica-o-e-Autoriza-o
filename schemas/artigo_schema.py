@@ -6,7 +6,7 @@ class ArtigoSchema(BaseModel):
     id: Optional[int] = None
     titulo: str
     descricao: str
-    url: HttpUrl
+    url_fonte: HttpUrl
     usuario_id: Optional[int]
 
     class Config:
