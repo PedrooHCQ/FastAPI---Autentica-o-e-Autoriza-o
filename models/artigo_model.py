@@ -1,9 +1,9 @@
 from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
 
-from core.configs import settings
+from core.configs import DBBaseModel
 
-class ArtigoModel(settings.DBBaseModel):
+class ArtigoModel(DBBaseModel):
     __tablename__ = 'artigos'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
