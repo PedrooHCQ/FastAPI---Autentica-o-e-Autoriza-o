@@ -29,6 +29,8 @@ async def autenticar(email: EmailStr, senha: str, db: AsyncSession) -> Optional[
         if not verificar_senha(senha, usuario.senha):
             return None
 
+        return usuario
+
 def _criar_token(tipo_token: str, tempo_vida: timedelta, sub: str) -> str:
     payload = {}
 
