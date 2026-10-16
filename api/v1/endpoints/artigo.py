@@ -8,7 +8,7 @@ from sqlalchemy.future import select
 from models.artigo_model import ArtigoModel
 from models.usuario_model import UsuarioModel
 
-from schemas.artigo_schema import ArtigoSchema
+from schemas.artigo_schema import ArtigoSchema, ArtigoSchemaUp
 
 from core.deps import get_session, get_current_user
 
@@ -45,7 +45,7 @@ async def get_artigo(artigo_id: int, db: AsyncSession = Depends(get_session)):
         return artigo
 
 @router.put("/{artigo_id}", response_model=ArtigoSchema, status_code=status.HTTP_202_ACCEPTED)
-async def put_artigo(artigo_id: int, artigo: ArtigoSchema, db: AsyncSession = Depends(get_session), usuario_logado: UsuarioModel = Depends(get_current_user)):
+async def put_artigo(artigo_id: int, artigo: ArtigoSchemaUp, db: AsyncSession = Depends(get_session), usuario_logado: UsuarioModel = Depends(get_current_user)):
     async with db as session:
         query = select(ArtigoModel).filter(ArtigoModel.id == artigo_id)
         result = await session.execute(query)
@@ -57,7 +57,7 @@ async def put_artigo(artigo_id: int, artigo: ArtigoSchema, db: AsyncSession = De
             if artigo.descricao:
                 artigo_up.descricao = artigo.descricao
             if artigo.url_fonte:
-                artigo_up.url_fonte = artigo.url_fonte
+                artigo_up.url_fonte = str(artigo.url_fonte)
             if usuario_logado.id != artigo_up.usuario_id:
                 artigo_up.usuario_id = usuario_logado.id
 
